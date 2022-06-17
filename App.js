@@ -5,11 +5,32 @@ import {
   StyleSheet,
   TouchableOpacity,
   TextInput,
+  FlatList,
 } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 
+import Task from './src/Task';
+
 export default function App() {
   const [task, setTask] = useState('');
+  const [list, setList] = useState([
+    {
+      key: '1',
+      item: 'Comprar pão',
+    },
+    {
+      key: '2',
+      item: 'Estudar React Native',
+    },
+    {
+      key: '3',
+      item: 'Descansar',
+    },
+    {
+      key: '4',
+      item: 'Pagar conta de luz',
+    },
+  ]);
 
   function handleAdd() {
     alert('Tarefa: ' + task);
@@ -31,6 +52,13 @@ export default function App() {
           <FontAwesome name="plus" size={20} color="#FFF" />
         </TouchableOpacity>
       </View>
+
+      <FlatList
+        data={list}
+        keyExtractor={(item) => item.key}
+        renderItem={({ item }) => <Task data={item} />}
+        style={styles.list}
+      />
     </View>
   );
 }
@@ -72,5 +100,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 4,
+  },
+  list: {
+    flex: 1,
+    backgroundColor: '#FFF',
+    paddingStart: '4%',
+    paddingEnd: '4%',
   },
 });
