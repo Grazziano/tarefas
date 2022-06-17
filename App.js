@@ -1,20 +1,36 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  TextInput,
+} from 'react-native';
+import { FontAwesome } from '@expo/vector-icons';
 
 export default function App() {
-  const [name, setName] = useState('Fulano');
+  const [task, setTask] = useState('');
 
-  function handlemudaNome() {
-    // alert('TESTE');
-    setName('Grazziano');
+  function handleAdd() {
+    alert('Tarefa: ' + task);
   }
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{name}</Text>
-      <TouchableOpacity style={styles.button} onPress={handlemudaNome}>
-        <Text style={styles.buttonText}>Mudar nome</Text>
-      </TouchableOpacity>
+      <Text style={styles.title}>Tarefas</Text>
+
+      <View style={styles.containerInput}>
+        <TextInput
+          placeholder="Digite sua tarefa..."
+          style={styles.input}
+          value={task}
+          onChangeText={(text) => setTask(text)}
+        />
+
+        <TouchableOpacity style={styles.buttonAdd} onPress={handleAdd}>
+          <FontAwesome name="plus" size={20} color="#FFF" />
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
@@ -22,24 +38,39 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F1F1F1',
+    backgroundColor: '#22272E',
     paddingTop: 28,
   },
   title: {
-    fontSize: 32,
-    color: '#121212',
     fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  button: {
-    backgroundColor: 'blue',
-    height: 40,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 35,
-  },
-  buttonText: {
+    fontSize: 24,
     color: '#FFF',
-    fontWeight: 'bold',
+    marginTop: '5%',
+    paddingStart: '5%',
+    marginBottom: 12,
+  },
+  containerInput: {
+    flexDirection: 'row',
+    width: '100%',
+    height: 44,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 22,
+  },
+  input: {
+    width: '75%',
+    backgroundColor: '#FBFBFB',
+    height: 44,
+    borderRadius: 4,
+    paddingHorizontal: 8,
+  },
+  buttonAdd: {
+    width: '15%',
+    height: 44,
+    backgroundColor: '#73F3FF',
+    marginLeft: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 4,
   },
 });
