@@ -13,27 +13,29 @@ import Task from './src/Task';
 
 export default function App() {
   const [task, setTask] = useState('');
-  const [list, setList] = useState([
-    {
-      key: '1',
-      item: 'Comprar pão',
-    },
-    {
-      key: '2',
-      item: 'Estudar React Native',
-    },
-    {
-      key: '3',
-      item: 'Descansar',
-    },
-    {
-      key: '4',
-      item: 'Pagar conta de luz',
-    },
-  ]);
+  const [list, setList] = useState([]);
 
   function handleAdd() {
-    alert('Tarefa: ' + task);
+    // alert('Tarefa: ' + task);
+    if (task === '') {
+      return;
+    }
+
+    const data = {
+      key: Date.now(),
+      item: task,
+    };
+
+    setList((oldArray) => [data, ...oldArray]);
+    setTask('');
+  }
+
+  function handleDelete(item) {
+    // alert(item);
+    let filtroItem = list.filter((tarefa) => {
+      return tarefa.item !== item;
+    });
+    setList(filtroItem);
   }
 
   return (
@@ -56,7 +58,9 @@ export default function App() {
       <FlatList
         data={list}
         keyExtractor={(item) => item.key}
-        renderItem={({ item }) => <Task data={item} />}
+        renderItem={({ item }) => (
+          <Task data={item} deleteItem={() => handleDelete(item.item)} />
+        )}
         style={styles.list}
       />
     </View>
